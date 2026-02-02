@@ -20,18 +20,18 @@ export const authorizedMiddleware = async ( req: Request, res: Response, next: N
         if (!authHeader || !authHeader.startsWith("Bearer ")) {
             throw new HttpError("Unauthorized: token malformed", 401);
         }
-
+        console.log(authHeader)
         const token = authHeader.split(" ")[1]; // "Bearer <token>" [1] -> token
         if (!token) {
             throw new HttpError("Unauthorized: No token provided", 401);
         }
 
         const decoded = jwt.verify(token, JWT_SECRET) as Record<string, any>;
-        if ( !decoded || !decoded.userId ) {
+        if ( !decoded || !decoded.id ) {
             throw new HttpError("Unauthorized: Invalid token", 401);
         }
 
-        const user = await userRepository.getUserById(decoded.userId);
+        const user = await userRepository.getUserById(decoded.id);
         if (!user) {
             throw new HttpError("Unauthorized: User not found", 401);
         }

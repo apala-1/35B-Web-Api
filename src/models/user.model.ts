@@ -9,6 +9,7 @@ const UserSchema: Schema = new Schema<UserType>(
         firstName: { type: String },
         lastName: { type: String },
         role: { type: String, enum: ["user", "admin"], default: "user" },
+        imageUrl: { type: String, required: false }
     },
     { timestamps: true } // auto createdAt and updatedAt fields
 );

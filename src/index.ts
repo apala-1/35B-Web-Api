@@ -3,9 +3,12 @@ import bodyParser from 'body-parser';
 import authRoutes from './routes/auth.route';
 import bookRoutes from './routes/book.route';
 import authUserRoutes from './routes/admin/user.route';
+import blogRoutes from './routes/blog.route';
+import adminBlogRoutes from './routes/admin/blog.route';
 import { connectToDatabase } from './database/mongodb';
 import dotenv from 'dotenv';
 import { PORT } from './config';
+import path from "path";
 
 dotenv.config();
 // can use .env variable below this
@@ -14,11 +17,15 @@ console.log(process.env.PORT);
 const app: Application = express();
 // const PORT: number = 3000;
 
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+
 app.use(bodyParser.json());
 
+app.use('/api/blogs', blogRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/books', bookRoutes);
 app.use('/api/admin/users', authUserRoutes);
+app.use('/api/admin/blogs', adminBlogRoutes);
 
 app.get('/', (req: Request, res: Response) => {
     res.send('Hello, World!');

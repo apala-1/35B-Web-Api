@@ -23,7 +23,10 @@ export const CreateUserDTO = userSchema.pick(
 export type CreateUserDTO = z.infer<typeof CreateUserDTO>;
 
 export const LoginUserDTO = z.object({
-    email: z.string().email(),
+    email: z.email(),
     password: z.string().min(6)
 });
 export type LoginUserDTO = z.infer<typeof LoginUserDTO>;
+
+export const UpdateUserDTO = userSchema.partial();
+export type UpdateUserDTO = z.infer<typeof UpdateUserDTO>;
